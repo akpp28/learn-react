@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>React ES5 vs ES6</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.6.15/browser.js"></script>
+</head>
+<body>
+<div id="content"></div>
+<script type="text/babel">
+    var Welcome = React.createClass({
+        getInitialState: function () {
+            return {date: Date()};
+        },
+
+        handleClick: function () {
+            this.setState({date: Date()});
+        },
+
+        render: function () {
+            return (
+                <div>
+                    <h1>Hello, {this.props.name}</h1>
+                    <h2>It is {this.state.date}</h2>
+                    <button onClick={this.handleClick} >Refresh</button>
+                </div>
+            );
+        }
+    });
+
+    ReactDOM.render(<Welcome/>, document.getElementById('content'));
+
+</script>
+</body>
+</html>

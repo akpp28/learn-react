@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+    <script src="lib/react.v0.14.0.js"></script>
+    <script src="lib/react-dom.v0.14.0.js"></script>
+</head>
+<body>
+<div id="container"></div>
+<script>
+    var elem1 = React.createElement(
+        "h1",
+        {id: "id_001", className: "my_title"},
+        "Hello World!"
+    );
+    var elem2 = React.createElement(
+        "div",
+        {id: "id_002", className: "my_desc"},
+        "Some description..."
+    );
+    var root = React.createElement("div", null, elem1, elem2);
+    ReactDOM.render(root, document.getElementById("container"));
+</script>
+</body>
+</html>
