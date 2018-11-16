@@ -24,7 +24,7 @@
         render() {
             return (
                 <div>
-                    <h1>Hello, {this.props.name}</h1>
+                    <h1>Hello, {this.props.title}</h1>
                     <h2>It is {this.state.date}</h2>
                     <button onClick={this.handleClick.bind(this)}>Refresh</button>
                 </div>
@@ -32,7 +32,7 @@
         }
     }
 
-    ReactDOM.render(<Welcome/>, document.getElementById('content'));
+    ReactDOM.render(<Welcome title="My Timer"/>, document.getElementById('content'));
 
 </script>
 </body>

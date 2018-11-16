@@ -12,9 +12,17 @@
 __Stateful__ - компонент содержащий внутреннее состояния `state`
 ** __Stateless__ - не содержит `state`
 
-*и это никак не зависит от того как был объявлен компонент через функцию или класс*
+*и это никак не зависит от того как был объявлен компонент через функцию или класс
 
+### State & Props
+Props are immutable - some kind of component configuration, received from parent.
+State - mutable. Can be changed using .setState() method inside component.
 
+### Synthetic events
+### Controlled/Uncontrolled components
+
+### Questions:
+* Как сделать так чтобы первая ветка отреагировать на изменения в первой - никак, для этого есть Flux
 
 ## Links:
 * [react-essential-course](https://github.com/krambertech/react-essential-course)
