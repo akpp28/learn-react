@@ -21,6 +21,31 @@ State - mutable. Can be changed using .setState() method inside component.
 ### Synthetic events
 ### Controlled/Uncontrolled components
 
+#### Инициализация компонента
+* getDefaultProps
+* getInitialState
+* componentWillMount
+* render 
+* componentDid mount
+
+#### Props Change
+* componentWillReceiveProps
+* shouldComponentUpdate
+* componentWillUpdate
+* render
+* componentDidUpdate
+
+#### Изменения Состояния (state)
+* shouldComponentUpdate
+* componentWillUpdate
+* render
+* componentDidUpdate
+
+#### Демонтаж Компонента (unmount)
+* componentWillUnmount
+* * уборка: событий, ссылки в компоненте, очистка интревалов
+
+
 ### Questions:
 * Как сделать так чтобы первая ветка отреагировать на изменения в первой - никак, для этого есть Flux
 
