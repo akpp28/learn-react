@@ -2,7 +2,10 @@ var Note = React.createClass({
     render: function () {
         var style = {backgroundColor: this.props.color};
         return (
-            <div className="note" style={style}>{this.props.children}</div>
+            <div className="note" style={style}>
+                <span className="delete-note" onClick={this.props.onDelete}>x</span>
+                {this.props.children}
+            </div>
         )
     }
 });
@@ -45,7 +48,7 @@ var NoteEditor = React.createClass({
 });
 var NotesGrig = React.createClass({
         componentDidMount: function () {
-            var elem = document.querySelector('.notes-grid');
+            var elem = this.refs.grid;
             this.msnry = new Masonry(elem, {
                 itemSelector: '.note',
                 columnWidth: 200,
@@ -53,19 +56,27 @@ var NotesGrig = React.createClass({
             });
 
         },
-        componentDidUpdate: function(prevProps){
-            if (this.props.notes.length !== prevProps.notes.length){
+        componentDidUpdate: function (prevProps) {
+            if (this.props.notes.length !== prevProps.notes.length) {
                 this.msnry.reloadItems();
                 this.msnry.layout();
             }
 
         },
         render: function () {
+            var onNoteDelete = this.props.onNoteDelete
             return (
-                <div className="notes-grid">
+                <div className="notes-grid" ref="grid">
                     {
                         this.props.notes.map(function (note) {
-                            return <Note key={note.id} color={note.color}>{note.text}</Note>
+                            return (
+                                <Note
+                                    key={note.id}
+                                    onDelete={onNoteDelete.bind(null, note)}
+                                    color={note.color}>
+                                    {note.text}
+                                </Note>
+                            );
                         })
                     }
                 </div>
@@ -76,27 +87,25 @@ var NotesGrig = React.createClass({
 var NotesApp = React.createClass({
     getInitialState: function () {
         return {
-            notes: [
-                {'id': 1, 'text': 'aaa', 'color': '#00D700'},
-                {
-                    'id': 8,
-                    'text': 'bbb  ddfsa fsdfsfsdfasd fsdaf s f sfd asfadfas dfas fasfdasd sdfasdfdasfasd af asdf asdf sdf asfd safsa;fdasjfsakldf; as;fk asd;fasjf ;aslf jas;dlkf jasdflk ',
-                    'color': '#FFD300'
-                },
-                {'id': 2, 'text': 'bbb  dsfadfas dfas fasfdasd sdfasdfdasfasd af asdf asdf ', 'color': '#FFD300'},
-                {'id': 3, 'text': 'bbb  dsfadfas dfas fasfdasd sdfasdfdasfasd af asdf asdf ', 'color': '#FFD300'},
-                {'id': 4, 'text': 'bbb 2 ', 'color': '#FFD300'},
-                {'id': 5, 'text': 'bbb  dsfadfas dfas fasfdasd sdfasdfdasfasd af asdf asdf ', 'color': '#FFD300'},
-                {
-                    'id': 6,
-                    'text': 'bbb  dsfadfas dfas fasfdasd sdfasdfdasfasd af asdf asdf sdf asfd safsa;fdasjfsakldf; as;fk asd;fasjf ;aslf jas;dlkf jasdflk ',
-                    'color': '#FFD300'
-                },
-                {'id': 7, 'text': 'bbb 2 dds', 'color': '#FFD300'},
-            ]
+            notes: []
         }
     },
-
+    componentDidMount: function () {
+        var localNotes = JSON.parse(localStorage.getItem('notes'));
+        if (localNotes) {
+            this.setState({notes: localNotes})
+        }
+    },
+    componentDidUpdate: function () {
+        this._updateLocalStorage()
+    },
+    handleNoteDelete: function (note) {
+        var noteId = note.id;
+        var newNotes = this.state.notes.filter(function () {
+            return note.id !== noteId;
+        })
+        this.setState({'notes': newNotes})
+    },
     handleNoteAdd: function (newNote) {
         var newNotes = this.state.notes.slice();
         newNotes.unshift(newNote);
@@ -107,9 +116,13 @@ var NotesApp = React.createClass({
             <div className="notes-app">
                 NotesApp
                 <NoteEditor onNoteAdd={this.handleNoteAdd}/>
-                <NotesGrig notes={this.state.notes}/>
+                <NotesGrig notes={this.state.notes} onNoteDelete={this.handleNoteDelete}/>
             </div>
         )
+    },
+    _updateLocalStorage: function () {
+        var notes = JSON.stringify(this.state.notes);
+        localStorage.setItem('notes', notes)
     }
 });
 
