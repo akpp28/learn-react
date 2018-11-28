@@ -99,12 +99,12 @@ var NotesApp = React.createClass({
     componentDidUpdate: function () {
         this._updateLocalStorage()
     },
-    handleNoteDelete: function (note) {
+    handleNoteDelete: function(note) {
         var noteId = note.id;
-        var newNotes = this.state.notes.filter(function () {
+        var newNotes = this.state.notes.filter(function(note) {
             return note.id !== noteId;
-        })
-        this.setState({'notes': newNotes})
+        });
+        this.setState({ notes: newNotes });
     },
     handleNoteAdd: function (newNote) {
         var newNotes = this.state.notes.slice();
