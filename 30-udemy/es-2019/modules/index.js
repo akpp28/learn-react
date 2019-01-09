@@ -1,4 +1,4 @@
-// doesnt work without babel
+// doesn't work without babel
 
 import {PI, divide as div} from './mymath';
 import * as calc from './mymath';
