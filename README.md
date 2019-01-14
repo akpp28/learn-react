@@ -18,32 +18,29 @@ __Stateful__ - компонент содержащий внутреннее со
 Props are immutable - some kind of component configuration, received from parent.
 State - mutable. Can be changed using .setState() method inside component.
 
-### Synthetic events
-### Controlled/Uncontrolled components
+### Lifecycle methods
+#### Mounting
+* `constructor()`
+* `getDerivedStateFromProps()`
+* `render()`
+* `componentDidMount()`
 
-#### Инициализация компонента
-* getDefaultProps
-* getInitialState
-* componentWillMount
-* render 
-* componentDid mount
+#### Updating (new props, setState(), forceUpdate())
+* `getDerivedStateFromProps()`
+* `shouldComponentUpdate()`
+* `render()`
+* `componentDidUpdate()`
 
-#### Props Change
-* componentWillReceiveProps
-* shouldComponentUpdate
-* componentWillUpdate
-* render
-* componentDidUpdate
+#### Unmounting
+* `componentWillUnmount()` уборка событий, ссылки в компоненте, очистка интревалов
 
-#### Изменения Состояния (state)
-* shouldComponentUpdate
-* componentWillUpdate
-* render
-* componentDidUpdate
+#### Error
+* `componentDidCatch()`
 
-#### Демонтаж Компонента (unmount)
-* componentWillUnmount
-* * уборка: событий, ссылки в компоненте, очистка интревалов
+
+links:
+* [The Component Lifecycle](https://reactjs.org/docs/react-component.html#the-component-lifecycle).
+* [lifecycle diagram](http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)
 
 
 ### Questions:
