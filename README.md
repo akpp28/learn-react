@@ -38,6 +38,20 @@ State - mutable. Can be changed using .setState() method inside component.
 * `componentDidCatch()`
 
 
+### React-Router
+
+```
+<BrowserRouter>
+  <Route path="/" render={() => <h2>Welcome!</h2>}exact />
+  <Route path='/info' component={InfoPage}/>
+  <Route path='/people/:id/' render={(mach) => <Person personId={mach.params.id}/>}/>
+</BrowserRouter>
+```
+#####link:
+
+`<link to='/info'>Info</link>` - обновляет URL в адресной строке, но не перезагружает страницу
+
+
 links:
 * [The Component Lifecycle](https://reactjs.org/docs/react-component.html#the-component-lifecycle).
 * [lifecycle diagram](http://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/)
