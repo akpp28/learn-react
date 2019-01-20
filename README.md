@@ -40,7 +40,7 @@ State - mutable. Can be changed using .setState() method inside component.
 
 ### React-Router
 
-```js
+```jsx
 import {BrowserRouter, Route} from "react-router-dom";
 
 <BrowserRouter>
@@ -51,7 +51,6 @@ import {BrowserRouter, Route} from "react-router-dom";
     </div>
 </BrowserRouter>
 ```
-####link:
 ```js
 import { Link } from 'react-router-dom';
 <Link to='/info'>Info</Link>

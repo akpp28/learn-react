@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 
 import './header.css'
 
@@ -8,13 +8,12 @@ const Header = ({loginHandler, signupHandler}) => {
     return (
         <div className='header'>
             <div className='navigation-wrap'>
-                {/*<a href="#" className="btn btn-primary login" role="button" aria-pressed="true">Sign Up</a>*/}
-                <Link to="/login" className="btn btn-dark signup" role="button" aria-pressed="true"
-                   onClick={loginHandler}
-                >Log In</Link>
-                <Link to="signup" className="btn btn-dark login" role="button" aria-pressed="true"
-                   onClick={signupHandler}
-                >Sign Up</Link>
+                <NavLink to="/login" className="btn login" activeClassName="btn-primary" role="button" aria-pressed="true"
+                         onClick={loginHandler}
+                >Log In</NavLink>
+                <NavLink to="/signup" className="btn signup" activeClassName="btn-primary" role="button" aria-pressed="true"
+                         onClick={signupHandler}
+                >Sign Up</NavLink>
             </div>
         </div>
     );
