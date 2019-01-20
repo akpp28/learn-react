@@ -1,0 +1,19 @@
+.header{
+    background-color: #000000;
+}
+.btn.green{
+    background-color: #47cf73;
+}
+
+
+.login, .signup{
+    margin: 6px;
+}
+
+.navigation-wrap {
+    /*display: block;*/
+    /*display: flex;*/
+    /*float: right;*/
+
+    display: flex; justify-content: flex-end
+}
