@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 import './header.css'
 
 
@@ -7,12 +9,12 @@ const Header = ({loginHandler, signupHandler}) => {
         <div className='header'>
             <div className='navigation-wrap'>
                 {/*<a href="#" className="btn btn-primary login" role="button" aria-pressed="true">Sign Up</a>*/}
-                <a href="#" className="btn btn-dark signup" role="button" aria-pressed="true"
+                <Link to="/login" className="btn btn-dark signup" role="button" aria-pressed="true"
                    onClick={loginHandler}
-                >Log In</a>
-                <a href="#" className="btn btn-dark login" role="button" aria-pressed="true"
+                >Log In</Link>
+                <Link to="signup" className="btn btn-dark login" role="button" aria-pressed="true"
                    onClick={signupHandler}
-                >Sign Up</a>
+                >Sign Up</Link>
             </div>
         </div>
     );

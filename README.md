@@ -41,15 +41,22 @@ State - mutable. Can be changed using .setState() method inside component.
 ### React-Router
 
 ```
+import {BrowserRouter, Route} from "react-router-dom";
+
 <BrowserRouter>
-  <Route path="/" render={() => <h2>Welcome!</h2>}exact />
-  <Route path='/info' component={InfoPage}/>
-  <Route path='/people/:id/' render={(mach) => <Person personId={mach.params.id}/>}/>
+    <div>
+      <Route path="/" render={() => <h2>Welcome!</h2>}exact />
+      <Route path='/info' component={InfoPage}/>
+      <Route path='/people/:id/' render={(mach) => <Person personId={mach.params.id}/>}/>
+    </div>
 </BrowserRouter>
 ```
-#####link:
-
-`<link to='/info'>Info</link>` - обновляет URL в адресной строке, но не перезагружает страницу
+####link:
+```
+import { Link } from 'react-router-dom';
+<Link to='/info'>Info</Link>
+```
+обновляет URL в адресной строке, но не перезагружает страницу
 
 
 links:
