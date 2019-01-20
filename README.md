@@ -40,7 +40,7 @@ State - mutable. Can be changed using .setState() method inside component.
 
 ### React-Router
 
-```typescript jsx
+```jsx harmony
 import {BrowserRouter, Route} from "react-router-dom";
 
 <BrowserRouter>
