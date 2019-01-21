@@ -18,6 +18,8 @@ export const userService = {
 
 
 function login(username, password) {
+
+    console.log('service: login', config);
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -89,7 +91,6 @@ function _delete(id) {
 
 function handleResponse(response) {
     return response.text().then(text => {
-        console.log('resp', response)
         const data = text && JSON.parse(text);
         if (!response.ok) {
             if (response.status === 401) {
