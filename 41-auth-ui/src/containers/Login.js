@@ -23,7 +23,7 @@ export default class Login extends Component {
         this.setState({
             [event.target.id]: event.target.value
         });
-    }
+    };
 
     handleSubmit = async event => {
         event.preventDefault();
@@ -32,7 +32,7 @@ export default class Login extends Component {
             await userService.login(this.state.email, this.state.password);
             // await Auth.signIn(this.state.email, this.state.password);
             this.props.userHasAuthenticated(true);
-
+            this.props.history.push("/");
             // alert("Logged in");
         } catch (e) {
             alert(e.message);
