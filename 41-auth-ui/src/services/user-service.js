@@ -9,22 +9,46 @@ export const userService = {
     getAll,
     getById,
     update,
-    delete: _delete
+    delete: _delete,
+    apiTokenVerify,
 };
+
+
+const signature_expired = 'Signature has expired.'
 
 
 function login(username, password) {
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ username, password })
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({username, password})
     };
 
-    return fetch(`${config.apiUrl}/users/authenticate/`, requestOptions)
+    return fetch(config.apiTokenAuthUrl, requestOptions)
         .then(handleResponse)
         .then(user => {
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             localStorage.setItem('user', JSON.stringify(user));
+
+            return user;
+        });
+}
+
+function apiTokenVerify() {
+    const requestOptions = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: localStorage.getItem('user'),
+
+    };
+
+    return fetch(config.apiTokenVerifyUrl, requestOptions)
+        .then(handleResponse)
+        .then(user => {
+            console.log('apiTokenVerify');
+            // TODO: handle error
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            // localStorage.setItem('user', JSON.stringify(user));
 
             return user;
         });
@@ -56,7 +80,7 @@ function getById(id) {
 function register(user) {
     const requestOptions = {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {'Content-Type': 'application/json'},
         body: JSON.stringify(user)
     };
 
@@ -66,11 +90,12 @@ function register(user) {
 function update(user) {
     const requestOptions = {
         method: 'PUT',
-        headers: { ...authHeader(), 'Content-Type': 'application/json' },
+        headers: {...authHeader(), 'Content-Type': 'application/json'},
         body: JSON.stringify(user)
     };
 
-    return fetch(`${config.apiUrl}/users/${user.id}`, requestOptions).then(handleResponse);;
+    return fetch(`${config.apiUrl}/users/${user.id}`, requestOptions).then(handleResponse);
+    ;
 }
 
 // prefixed function name with underscore because delete is a reserved word in javascript
@@ -87,6 +112,11 @@ function handleResponse(response) {
     return response.text().then(text => {
         const data = text && JSON.parse(text);
         if (!response.ok) {
+            // if (data.non_field_errors && data.non_field_errors[0] == signature_expired) {
+            //     logout();
+            //     login()
+            // }
+
             if (response.status === 401) {
                 // auto logout if 401 response returned from api
                 logout();

@@ -5,6 +5,7 @@ import {Nav, Navbar, NavItem} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";
 
 import "./App.css";
+import {userService} from "./services/user-service";
 
 class App extends Component {
 
@@ -21,8 +22,13 @@ class App extends Component {
     async componentDidMount() {
         try {
             // await Auth.currentSession();
-            this.userHasAuthenticated(true);
+
+            if (localStorage.getItem('user')) {
+                userService.apiTokenVerify();
+                this.userHasAuthenticated(true);
+            }
         } catch (e) {
+            console.log('err', e);
             if (e !== 'No current user') {
                 alert(e);
             }
