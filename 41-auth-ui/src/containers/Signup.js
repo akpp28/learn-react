@@ -7,6 +7,7 @@ import {
 } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 import "./Signup.css";
+import {userService} from "../services/user-service";
 
 export default class Signup extends Component {
     constructor(props) {
@@ -17,8 +18,8 @@ export default class Signup extends Component {
             email: "",
             password: "",
             confirmPassword: "",
-            confirmationCode: "",
-            newUser: null
+            // confirmationCode: "",
+            // newUser: null
         };
     }
 
@@ -45,7 +46,29 @@ export default class Signup extends Component {
 
         this.setState({ isLoading: true });
 
-        this.setState({ newUser: "test" });
+        try {
+            // const newUser = await Auth.signUp({
+            //     username: this.state.email,
+            //     password: this.state.password
+            // });
+            // this.setState({
+            //     newUser
+            // });
+
+            // await Auth.confirmSignUp(this.state.email, this.state.confirmationCode);
+            // await Auth.signIn(this.state.email, this.state.password);
+
+            await userService.register(this.state.email, this.state.password, this.state.confirmPassword);
+
+
+            this.props.userHasAuthenticated(true);
+            this.props.history.push("/login");
+
+
+        } catch (e) {
+            this.setState({ isLoading: false });
+            alert(e.message);
+        }
 
         this.setState({ isLoading: false });
     }

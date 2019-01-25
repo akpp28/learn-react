@@ -1,4 +1,4 @@
-import * as config from '../config';
+import config from '../config';
 import {authHeader} from "../helpers";
 
 
@@ -23,6 +23,7 @@ function login(username, password) {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({username, password})
     };
+    console.log('login', requestOptions)
 
     return fetch(config.apiTokenAuthUrl, requestOptions)
         .then(handleResponse)
@@ -77,14 +78,15 @@ function getById(id) {
     return fetch(`${config.apiUrl}/users/${id}/`, requestOptions).then(handleResponse);
 }
 
-function register(user) {
+function register(username, password, passwordConfirm) {
     const requestOptions = {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(user)
+        body: JSON.stringify({username, password1:password, password2:passwordConfirm})
     };
+    console.log('register', requestOptions)
 
-    return fetch(`${config.apiUrl}/users/register/`, requestOptions).then(handleResponse);
+    return fetch(config.apiUrlSignUp, requestOptions).then(handleResponse);
 }
 
 function update(user) {
