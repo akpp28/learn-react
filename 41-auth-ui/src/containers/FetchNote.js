@@ -3,14 +3,12 @@ import {userService} from "../services/user-service";
 
 import {ControlLabel, FormControl, FormGroup} from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
-import config from "../config";
 import "./FetchNote.css";
 
 export default class FetchNote extends Component {
     constructor(props) {
         super(props);
 
-        // this.file = null;
 
         this.state = {
             isLoading: null,
@@ -23,14 +21,8 @@ export default class FetchNote extends Component {
 
     async componentDidMount() {
         try {
-            // let attachmentURL;
             const note = await this.getNote();
-            console.log('note', note)
             const {content} = note;
-            //
-            // if (attachment) {
-            //     attachmentURL = await Storage.vault.get(attachment);
-            // }
 
             this.setState({
                 note,
@@ -43,7 +35,6 @@ export default class FetchNote extends Component {
     }
 
     getNote() {
-        // return API.get("notes", `/notes/${this.props.match.params.id}`);
         return userService.fetchNote(this.props.match.params.id)
     }
 
@@ -65,37 +56,23 @@ export default class FetchNote extends Component {
         this.file = event.target.files[0];
     }
 
-    saveNote(note) {
-        return API.put("notes", `/notes/${this.props.match.params.id}`, {
-            body: note
-        });
+    saveNote(content) {
+        return userService.editNote(this.props.match.params.id, content);
     }
 
     handleSubmit = async event => {
-        let attachment;
-
         event.preventDefault();
 
-        if (this.file && this.file.size > config.MAX_ATTACHMENT_SIZE) {
-            alert(`Please pick a file smaller than ${config.MAX_ATTACHMENT_SIZE/1000000} MB.`);
-            return;
-        }
-
-        this.setState({ isLoading: true });
+        this.setState({isLoading: true});
 
         try {
-            // if (this.file) {
-            //     attachment = await s3Upload(this.file);
-            // }
-
             await this.saveNote({
                 content: this.state.content,
-                // attachment: attachment || this.state.note.attachment
             });
             this.props.history.push("/");
         } catch (e) {
             alert(e);
-            this.setState({ isLoading: false });
+            this.setState({isLoading: false});
         }
     }
 

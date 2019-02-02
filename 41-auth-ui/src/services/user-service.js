@@ -14,6 +14,7 @@ export const userService = {
     createNote,
     getAllNotes,
     fetchNote,
+    editNote,
 };
 
 
@@ -26,7 +27,6 @@ function login(username, password) {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({username, password})
     };
-    console.log('login', requestOptions)
 
     return fetch(config.apiTokenAuthUrl, requestOptions)
         .then(handleResponse)
@@ -49,7 +49,6 @@ function apiTokenVerify() {
     return fetch(config.apiTokenVerifyUrl, requestOptions)
         .then(handleResponse)
         .then(user => {
-            console.log('apiTokenVerify');
             // TODO: handle error
             // store user details and jwt token in local storage to keep user logged in between page refreshes
             // localStorage.setItem('user', JSON.stringify(user));
@@ -87,7 +86,6 @@ function register(username, password, passwordConfirm) {
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({username, password1: password, password2: passwordConfirm})
     };
-    console.log('register', requestOptions)
 
     return fetch(config.apiUrlSignUp, requestOptions).then(handleResponse);
 }
@@ -164,4 +162,14 @@ function fetchNote(noteId) {
     };
 
     return fetch(`${config.apiUrl}/notes/${noteId}/`, requestOptions).then(handleResponse);
+}
+
+function editNote(noteId, note) {
+    const requestOptions = {
+        method: 'PUT',
+        headers: {'Content-Type': 'application/json', ...authHeader()},
+        body: JSON.stringify({content: note.content})
+    };
+
+    return fetch(`${config.apiUrl}/notes/edit/${noteId}/`, requestOptions).then(handleResponse);
 }
