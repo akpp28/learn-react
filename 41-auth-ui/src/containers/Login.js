@@ -33,7 +33,7 @@ export default class Login extends Component {
         this.setState({ isLoading: true });
 
         try {
-            await userService.login(this.state.email, this.state.password);
+            await this.login(this.state.email, this.state.password);
             // await Auth.signIn(this.state.email, this.state.password);
             this.props.userHasAuthenticated(true);
             this.props.history.push("/");
@@ -43,6 +43,11 @@ export default class Login extends Component {
             this.setState({ isLoading: false });
 
         }
+    }
+
+    login(email, password){
+        userService.login(email, password);
+
     }
 
     render() {

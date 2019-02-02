@@ -3,6 +3,7 @@ import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 import config from "../config";
 import "./NewNote.css";
+import {userService} from "../services/user-service";
 
 export default class NewNote extends Component {
     constructor(props) {
@@ -32,13 +33,30 @@ export default class NewNote extends Component {
 
     handleSubmit = async event => {
         event.preventDefault();
+        console.log('handleSubmit');
 
-        if (this.file && this.file.size > config.MAX_ATTACHMENT_SIZE) {
-            alert(`Please pick a file smaller than ${config.MAX_ATTACHMENT_SIZE/1000000} MB.`);
-            return;
-        }
+        // if (this.file && this.file.size > config.MAX_ATTACHMENT_SIZE) {
+        //     alert(`Please pick a file smaller than ${config.MAX_ATTACHMENT_SIZE/1000000} MB.`);
+        //     return;
+        // }
 
         this.setState({ isLoading: true });
+
+        try {
+            await this.createNote(this.state.content);
+            this.props.history.push("/");
+        } catch (e) {
+            alert(e);
+            this.setState({ isLoading: false });
+        }
+    }
+
+    createNote(note) {
+        userService.createNote(note)
+        console.log('api call for note create', note)
+        // return API.post("notes", "/notes", {
+        //     body: note
+        // });
     }
 
     render() {

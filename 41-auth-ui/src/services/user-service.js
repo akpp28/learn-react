@@ -11,6 +11,9 @@ export const userService = {
     update,
     delete: _delete,
     apiTokenVerify,
+    createNote,
+    getAllNotes,
+    fetchNote,
 };
 
 
@@ -82,7 +85,7 @@ function register(username, password, passwordConfirm) {
     const requestOptions = {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({username, password1:password, password2:passwordConfirm})
+        body: JSON.stringify({username, password1: password, password2: passwordConfirm})
     };
     console.log('register', requestOptions)
 
@@ -131,4 +134,34 @@ function handleResponse(response) {
 
         return data;
     });
+}
+
+
+function createNote(content) {
+    const requestOptions = {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json', ...authHeader()},
+        body: JSON.stringify({content: content})
+    };
+    console.log('createNote', requestOptions)
+
+    return fetch(config.apiUrlCreateNote, requestOptions).then(handleResponse);
+}
+
+function getAllNotes() {
+    const requestOptions = {
+        method: 'GET',
+        headers: {'Content-Type': 'application/json', ...authHeader()},
+    };
+
+    return fetch(config.apiUrlgetAllNotes, requestOptions).then(handleResponse);
+}
+
+function fetchNote(noteId) {
+    const requestOptions = {
+        method: 'GET',
+        headers: {'Content-Type': 'application/json', ...authHeader()},
+    };
+
+    return fetch(`${config.apiUrl}/notes/${noteId}/`, requestOptions).then(handleResponse);
 }
