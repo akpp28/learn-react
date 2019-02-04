@@ -77,6 +77,10 @@ export default class FetchNote extends Component {
     }
 
 
+    deleteNote() {
+        return userService.deleteNote(this.props.match.params.id)
+    }
+
     handleDelete = async event => {
         event.preventDefault();
 
@@ -89,6 +93,14 @@ export default class FetchNote extends Component {
         }
 
         this.setState({isDeleting: true});
+
+        try {
+            await this.deleteNote();
+            this.props.history.push("/");
+        } catch (e) {
+            alert(e);
+            this.setState({isDeleting: false});
+        }
     }
 
     render() {

@@ -15,6 +15,7 @@ export const userService = {
     getAllNotes,
     fetchNote,
     editNote,
+    deleteNote,
 };
 
 
@@ -172,4 +173,13 @@ function editNote(noteId, note) {
     };
 
     return fetch(`${config.apiUrl}/notes/edit/${noteId}/`, requestOptions).then(handleResponse);
+}
+
+function deleteNote(noteId) {
+    const requestOptions = {
+        method: 'DELETE',
+        headers: {'Content-Type': 'application/json', ...authHeader()},
+    };
+
+    return fetch(`${config.apiUrl}/notes/delete/${noteId}/`, requestOptions).then(handleResponse);
 }
